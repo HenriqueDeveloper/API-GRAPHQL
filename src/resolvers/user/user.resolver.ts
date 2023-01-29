@@ -1,6 +1,6 @@
 import { Body, ValidationPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Token } from 'src/auth/token-type';
+import { Token } from 'src/types/token-type';
 import { CreateUserDto } from 'src/dtos/create-user.dto';
 import { CredentialsDto } from 'src/dtos/credentials.dto';
 import { User } from 'src/entities/user.entity';
