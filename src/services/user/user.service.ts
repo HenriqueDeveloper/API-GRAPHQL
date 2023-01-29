@@ -1,19 +1,25 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from 'src/dtos/create-user.dto';
-import { UserRole } from 'src/enum/user-role.enum'; 
 import { User } from 'src/entities/user.entity'; 
 import { CredentialsDto } from 'src/dtos/credentials.dto';
 import * as bcrypt from 'bcrypt';
+import { City } from 'src/entities/city.entity';
+import { Repository } from 'typeorm';
+import { Roles } from 'src/enum/user-role.enum';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(City)
+    private cityRepository: Repository<City>
+    ){}
   
   async createAdminUser(createUserDto: CreateUserDto): Promise<User> {
     if (createUserDto.password != createUserDto.passwordConfirmation) {
       throw new UnprocessableEntityException('As senhas não conferem');
     } else {
-      return this.createUser(createUserDto, UserRole.ADMIN)
+      return this.createUser(createUserDto, Roles.ADMIN)
     }
   }
 
@@ -21,7 +27,7 @@ export class UsersService {
     if (createUserDto.password != createUserDto.passwordConfirmation) {
       throw new UnprocessableEntityException('As senhas não conferem');
     } else {
-      return this.createUser(createUserDto, UserRole.CLIENT);
+      return this.createUser(createUserDto, Roles.CLIENT);
     }
   }
   
@@ -29,19 +35,23 @@ export class UsersService {
     if (createUserDto.password != createUserDto.passwordConfirmation) {
       throw new UnprocessableEntityException('As senhas não conferem');
     } else {
-      return this.createUser(createUserDto, UserRole.GERENTE);
+      return this.createUser(createUserDto, Roles.GERENTE);
     }
   }
 
-  private async createUser(createUserDto: CreateUserDto, role: UserRole): Promise<User> {
-    const { email, name, password, cpf } = createUserDto;
-    
+  private async createUser(createUserDto: CreateUserDto, role: Roles): Promise<User> {
+    const { email, name, password, cpf, idCity } = createUserDto;
+      const city = await this.cityRepository.findOne({
+        where: {id: idCity}
+      })
       const user = new User();
       user.email = email;
       user.name = name;
       user.role = role;
       user.cpf = cpf;
       user.status = true;
+      user.city = city
+
       user.salt = await bcrypt.genSalt(10);
       user.password = await hashPassword(password, user.salt);
 
