@@ -28,4 +28,9 @@ export class UserResolver {
     return this.userService.createManagerUser(createUserDto)
   }
 
+  @Query(() => [User])
+  async users() {
+    return this.userService.findAll()
+  }
+
 }
