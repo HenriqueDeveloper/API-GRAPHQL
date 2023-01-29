@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { Token } from 'src/auth/token-type';
+import { Token } from 'src/types/token-type';
 import { CredentialsDto } from 'src/dtos/credentials.dto';
 import { AuthService } from 'src/services/auth/auth.service';
 
