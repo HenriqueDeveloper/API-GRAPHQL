@@ -11,6 +11,7 @@
 
 # GraphQL
 /src/upload/*
+/src/schema.gql
 
 # Logs
 logs
