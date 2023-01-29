@@ -1,0 +1,54 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Address {
+  id: ID!
+  CEP: String!
+  typeStreet: String!
+  street: String!
+  number: Float!
+  complement: String!
+  neighborhood: String!
+  city: String!
+  state: String!
+  streetSituation: Boolean!
+}
+
+type User {
+  id: ID!
+  email: String!
+  cpf: String!
+  name: String!
+  status: Boolean!
+  password: String!
+}
+
+type Token {
+  token: String!
+  user: User!
+}
+
+type Query {
+  addres: [Address!]!
+}
+
+type Mutation {
+  createAdminUser(data: CreateUserDto!): User!
+  createCrientUser(data: CreateUserDto!): User!
+  createManagerUser(data: CreateUserDto!): User!
+  auth(data: CredentialsDto!): Token!
+}
+
+input CreateUserDto {
+  email: String!
+  cpf: String!
+  name: String!
+  password: String!
+  passwordConfirmation: String!
+}
+
+input CredentialsDto {
+  email: String!
+  password: String!
+}
