@@ -13,6 +13,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { City } from './city.entity';
+import { Address } from './address.entity';
 
 @Entity()
 @ObjectType()
@@ -41,9 +42,15 @@ export class User extends BaseEntity {
   @Field(() => Boolean)
   status: boolean;
 
-  @ManyToOne(() => City, (city) => city.user)
+  @ManyToOne(() => City, (city) => city.user, {eager: true})
   @JoinColumn({ name: "city_id" })
+  @Field(() => City)
   city: City;
+
+  @ManyToOne(() => Address, (address) => address.user, {eager: true})
+  @JoinColumn({ name: "address_id" })
+  @Field(() => Address)
+  address: Address;
 
   @Column({ nullable: false })
   @Field(() => String)

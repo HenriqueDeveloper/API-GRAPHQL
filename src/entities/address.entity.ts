@@ -1,5 +1,6 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Field, ID, Int, ObjectType } from "@nestjs/graphql";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user.entity";
 
 @ObjectType()
 @Entity('address')
@@ -20,7 +21,7 @@ export class Address extends BaseEntity {
     @Column({ nullable: false, type: 'varchar' })
     street: string;
   
-    @Field(() => Number)
+    @Field(() => Int)
     @Column({ nullable: false, type: 'integer' })
     number: number;
   
@@ -43,4 +44,7 @@ export class Address extends BaseEntity {
     @Field(() => Boolean)
     @Column({ name: 'street_situation', nullable: false, type: 'boolean' })
     streetSituation: boolean;
+
+    @OneToMany(() => User, (user) => user.address)
+    user: User;
 }
