@@ -6,9 +6,13 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
+    OneToOne,
+    ManyToOne,
+    JoinColumn,
   } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { City } from './city.entity';
 
 @Entity()
 @ObjectType()
@@ -36,6 +40,10 @@ export class User extends BaseEntity {
   @Column({ nullable: false, default: true })
   @Field(() => Boolean)
   status: boolean;
+
+  @ManyToOne(() => City, (city) => city.user)
+  @JoinColumn({ name: "city_id" })
+  city: City;
 
   @Column({ nullable: false })
   @Field(() => String)
