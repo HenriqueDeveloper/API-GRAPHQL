@@ -4,7 +4,7 @@ import { Address } from 'src/entities/address.entity';
 import { AddressResolver } from 'src/resolvers/address/address.resolver';
 import { AddressService } from 'src/services/address/address.service'; 
 
-Module({
+@Module({
     imports: [
       TypeOrmModule.forFeature([Address]),
     ],
