@@ -9,6 +9,8 @@ export class CreateUserDto {
     @Field(() => String)
     name: string;
     @Field(() => String)
+    idCity: string;
+    @Field(() => String)
     password: string;
     @Field(() => String)
     passwordConfirmation: string;
