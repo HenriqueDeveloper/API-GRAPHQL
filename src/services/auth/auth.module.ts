@@ -8,10 +8,11 @@ import { User } from 'src/entities/user.entity';
 import { UsersService } from 'src/services/user/user.service'; 
 import { AuthResolver } from 'src/resolvers/auth/auth.resolver';
 import { City } from 'src/entities/city.entity';
+import { Address } from 'src/entities/address.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, City]),
+    TypeOrmModule.forFeature([User, City, Address]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: 'super-secret',
